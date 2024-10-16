@@ -36,7 +36,7 @@ def create_app():
     from .models import User  # importing here to avoid circular references
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return db.session.scalar(db.select(User).where(User.id==user_id))
 
     #add Blueprints
     from . import views
